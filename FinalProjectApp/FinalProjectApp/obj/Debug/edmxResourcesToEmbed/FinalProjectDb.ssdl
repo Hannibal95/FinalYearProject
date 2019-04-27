@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinalProjectDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Build">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="Version" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Budget" Type="float" Nullable="false" />
+    <Property Name="ReleaseDate" Type="date" />
+    <Property Name="MaxVolatility" Type="float" Nullable="false" />
+    <Property Name="Completed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Component">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ValueToSystem" Type="float" Nullable="false" />
+    <Property Name="CostToBuild" Type="float" Nullable="false" />
+    <Property Name="RFInterestRate" Type="float" Nullable="false" />
+    <Property Name="DurationDays" Type="int" Nullable="false" />
+    <Property Name="Volatility" Type="float" Nullable="false" />
+    <Property Name="Selected" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CompOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OptionId" Type="bigint" Nullable="false" />
+    <Property Name="ComponentId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BuildId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="CallValue" Type="float" Nullable="false" />
+    <Property Name="ValueToSystem" Type="float" Nullable="false" />
+    <Property Name="CostToBuild" Type="float" Nullable="false" />
+    <Property Name="ValueToCostRatio" Type="float" Nullable="false" />
+    <Property Name="Volatility" Type="float" Nullable="false" />
+    <Property Name="DurationDays" Type="int" Nullable="false" />
+    <Property Name="Complete" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="FinalProjectDbModelStoreContainer">
+    <EntitySet Name="Build" EntityType="Self.Build" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompOption" EntityType="Self.CompOption" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Option" EntityType="Self.Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

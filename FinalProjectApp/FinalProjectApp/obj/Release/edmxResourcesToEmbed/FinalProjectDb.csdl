@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinalProjectDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Build">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Version" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+    <Property Name="Completed" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Build_Project" FromRole="Build" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Component">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ValueToSystem" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="CostToBuild" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="RFInterestRate" Type="Double" Nullable="false" />
+    <Property Name="DividendYield" Type="Double" Nullable="false" />
+    <Property Name="DurationDays" Type="Int32" Nullable="false" />
+    <Property Name="Volatility" Type="Double" Nullable="false" />
+    <Property Name="Selected" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Component_Project" FromRole="Component" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BuildId" Type="Int64" Nullable="false" />
+    <Property Name="BuildOrder" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CallOption" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Volatility" Type="Double" Nullable="false" />
+    <Property Name="TimeToComplete" Type="Int32" Nullable="false" />
+    <Property Name="Completed" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Builds" Relationship="Self.FK_Build_Project" FromRole="Project" ToRole="Build" />
+    <NavigationProperty Name="Components" Relationship="Self.FK_Component_Project" FromRole="Project" ToRole="Component" />
+  </EntityType>
+  <Association Name="FK_Build_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Build" Type="Self.Build" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_Component_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Component" Type="Self.Component" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="FinalProjectDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Builds" EntityType="Self.Build" />
+    <EntitySet Name="Components" EntityType="Self.Component" />
+    <EntitySet Name="Options" EntityType="Self.Option" />
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+    <AssociationSet Name="FK_Build_Project" Association="Self.FK_Build_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="Build" EntitySet="Builds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Component_Project" Association="Self.FK_Component_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="Component" EntitySet="Components" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

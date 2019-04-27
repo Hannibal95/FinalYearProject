@@ -1,0 +1,46 @@
+﻿<Page x:Class="FinalProjectApp.Pages.CreateComboOption"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FinalProjectApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="460"
+      Title="CreateComboOption">
+
+    <Grid MaxHeight="450" MaxWidth="460">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Rectangle x:Name="headerColour" Grid.Row="0" Grid.ColumnSpan="2" 
+                   Fill="#2d353e"></Rectangle>
+        <Rectangle x:Name="bodyColour" Grid.Row="1" Grid.RowSpan="2" 
+                   Grid.ColumnSpan="2" Fill="#4E87D4"></Rectangle>
+        
+        <Label x:Name="lblTitle" Foreground="FloralWhite" Grid.Row="0" FontSize="31" 
+               HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" >Create Multi-Component Option</Label>
+
+        <ListBox Grid.Column="0" Grid.Row="1" Margin="10,5,10,5" Grid.ColumnSpan="2" FontSize="18"
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ComponentsList">
+            <ListBox.ItemTemplate>
+                
+                <HierarchicalDataTemplate>
+                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button x:Name="btnCreate" Click="BtnCreate_Click" HorizontalAlignment="Center" 
+                Width="150" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,200,5">Create Option</Button>
+        <Button x:Name="btnBack" Click="BtnBack_Click" HorizontalAlignment="Center" 
+                Width="150" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="200,5,5,5">Back</Button>
+        
+    </Grid>
+</Page>

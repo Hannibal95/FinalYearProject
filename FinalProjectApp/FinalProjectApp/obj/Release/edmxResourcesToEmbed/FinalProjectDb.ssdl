@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinalProjectDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Build">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="Version" Type="text" Nullable="false" />
+    <Property Name="Budget" Type="money" />
+    <Property Name="ReleaseDate" Type="date" />
+    <Property Name="Completed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Component">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="text" Nullable="false" />
+    <Property Name="Description" Type="text" />
+    <Property Name="ValueToSystem" Type="money" Nullable="false" />
+    <Property Name="CostToBuild" Type="money" Nullable="false" />
+    <Property Name="RFInterestRate" Type="float" Nullable="false" />
+    <Property Name="DividendYield" Type="float" Nullable="false" />
+    <Property Name="DurationDays" Type="int" Nullable="false" />
+    <Property Name="Volatility" Type="float" Nullable="false" />
+    <Property Name="Selected" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BuildId" Type="bigint" Nullable="false" />
+    <Property Name="BuildOrder" Type="int" Nullable="false" />
+    <Property Name="Name" Type="text" Nullable="false" />
+    <Property Name="Description" Type="text" />
+    <Property Name="CallOption" Type="money" Nullable="false" />
+    <Property Name="Value" Type="money" Nullable="false" />
+    <Property Name="Volatility" Type="float" Nullable="false" />
+    <Property Name="TimeToComplete" Type="int" Nullable="false" />
+    <Property Name="Completed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="text" Nullable="false" />
+    <Property Name="Description" Type="text" />
+  </EntityType>
+  <Association Name="FK_Build_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Build" Type="Self.Build" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Build">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Component_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Component" Type="Self.Component" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Component">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FinalProjectDbModelStoreContainer">
+    <EntitySet Name="Build" EntityType="Self.Build" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Option" EntityType="Self.Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Build_Project" Association="Self.FK_Build_Project">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="Build" EntitySet="Build" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Component_Project" Association="Self.FK_Component_Project">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="Component" EntitySet="Component" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinalProjectDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Build">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectId" Type="Int32" Nullable="false" />
+    <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Budget" Type="Double" Nullable="false" />
+    <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+    <Property Name="MaxVolatility" Type="Double" Nullable="false" />
+    <Property Name="Completed" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Component">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ValueToSystem" Type="Double" Nullable="false" />
+    <Property Name="CostToBuild" Type="Double" Nullable="false" />
+    <Property Name="RFInterestRate" Type="Double" Nullable="false" />
+    <Property Name="DurationDays" Type="Int32" Nullable="false" />
+    <Property Name="Volatility" Type="Double" Nullable="false" />
+    <Property Name="Selected" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CompOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OptionId" Type="Int64" Nullable="false" />
+    <Property Name="ComponentId" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BuildId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CallValue" Type="Double" Nullable="false" />
+    <Property Name="ValueToSystem" Type="Double" Nullable="false" />
+    <Property Name="CostToBuild" Type="Double" Nullable="false" />
+    <Property Name="ValueToCostRatio" Type="Double" Nullable="false" />
+    <Property Name="Volatility" Type="Double" Nullable="false" />
+    <Property Name="DurationDays" Type="Int32" Nullable="false" />
+    <Property Name="Complete" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="FinalProjectDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Builds" EntityType="Self.Build" />
+    <EntitySet Name="Components" EntityType="Self.Component" />
+    <EntitySet Name="CompOptions" EntityType="Self.CompOption" />
+    <EntitySet Name="Options" EntityType="Self.Option" />
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+  </EntityContainer>
+</Schema>

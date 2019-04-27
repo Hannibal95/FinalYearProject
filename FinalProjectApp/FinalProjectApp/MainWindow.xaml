@@ -1,0 +1,14 @@
+﻿<NavigationWindow x:Class="FinalProjectApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinalProjectApp"
+        mc:Ignorable="d"
+        Title="FinalProjectApp" Height="740" Width="1200" 
+                  Source="Pages\StartPage.xaml" Background="#171b20" 
+                  WindowStartupLocation="Manual" 
+                  Left="100" Top="45"
+                  ResizeMode="CanMinimize" ShowsNavigationUI="False">
+        
+</NavigationWindow>
