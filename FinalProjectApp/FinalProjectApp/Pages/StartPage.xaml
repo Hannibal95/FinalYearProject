@@ -20,7 +20,7 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="260"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
@@ -35,16 +35,26 @@
         <Label x:Name="lblProjectName" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" FontWeight="Bold"
                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26">[Selected Project Name]</Label>
         <Label x:Name="lblDescription" Grid.Column="1" Grid.Row="2" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Description:</Label>
+               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold">Description:</Label>
         <Label x:Name="lblBuilds" Grid.Column="2" Grid.Row="2" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Builds:</Label>
+               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold">Builds:</Label>
         <Label x:Name="lblStats" Grid.Column="1" Grid.Row="4" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Project Statistics:</Label>
+               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold">Project Statistics:</Label>
 
         <TextBlock x:Name="txtDescription" Grid.Column="1" Grid.Row="3" Margin="10,10,10,10" FontSize="18"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray">[default]</TextBlock>
-        <TextBlock x:Name="txtStats" Grid.Column="1" Grid.Row="5" Margin="10,10,10,10" FontSize="18"
-                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray">[default]</TextBlock>
+        
+        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="txtStats" VerticalAlignment="Stretch"
+                  Grid.Column="1" Grid.Row="5" Margin="10,10,10,10" FontSize="16">
+            <DataGrid.Columns >
+                <DataGridTextColumn Binding="{Binding Path=A}"/>
+                <DataGridTextColumn Binding="{Binding Path=B}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button x:Name="ProduceReport" Margin="10,10,10,5" Grid.Row="6" Grid.Column="1" 
+                Click="ProduceReport_Click" VerticalAlignment="Top" FontSize="18"
+                HorizontalAlignment="Center" Width="200" >Produce Report</Button>
 
         <ListBox Name="buildListItems" Background="LightGray" Margin="10,10,10,10" FontSize="18"
                  ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="2" Grid.Row="3" Grid.RowSpan="4">

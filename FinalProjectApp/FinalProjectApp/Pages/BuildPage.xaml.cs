@@ -23,6 +23,7 @@ namespace FinalProjectApp.Pages
         private BlackScholes blackScholes = new BlackScholes();
         private FilterList filterList = new FilterList();
         private GenerateGraph graphGen = new GenerateGraph();
+        private BuildReport buildReport = new BuildReport();
 
         private Component component;
         private Image draggedImage;
@@ -37,13 +38,14 @@ namespace FinalProjectApp.Pages
 
         public void Refresh()
         {
-            lblTitle.Content = SysVars.CurrentBuildName;
+            lblTitle.Content = "Build: " + SysVars.CurrentBuildName;
             lblGraph.Content = SysVars.CurrentGraphType.ToString();
             SysVars.CurrentComponentId = 0;
             SysVars.CurrentOptionId = 0;
             PopulateComponentsByProjectId();
             PopulateOptionsByBuildId();
             SetBudgetandCost();
+            SetDevDaysFields();
             txtMaxRisk.Text = SysVars.MaxRisk.ToString();
             txtMinRisk.Text = SysVars.MinRisk.ToString();
             PopulateFilterList();
@@ -54,6 +56,51 @@ namespace FinalProjectApp.Pages
                 graphGen.GetGraph(canGraph, SysVars.MinRisk, SysVars.MaxRisk, FilterListObjects);
             }
             catch { }
+        }
+
+        private void SetDevDaysFields()
+        {
+            Nullable<DateTime> deadline = SysVars.CurrentBuildDeadline;
+            int days = 0;
+            var query = (from x in context.Options
+                         where x.BuildId == SysVars.CurrentBuildId
+                         select x);
+            foreach (var option in query)
+            {
+                if (option.Complete == false) { days += option.DurationDays; }
+            }
+
+            lblTotalDevDays.Content = "Total Dev Days: " + days.ToString();
+
+            if (deadline > DateTime.Today)
+            {
+                lblDeadline.Content = "Release Date: " + ((DateTime)deadline).ToShortDateString();
+                lblDaysRemaining.Content = "Days Remaining: " + ((DateTime)deadline - DateTime.Today).TotalDays.ToString();
+
+                if (((DateTime)deadline - DateTime.Today).TotalDays < days)
+                {
+                    lblDaysRemaining.Foreground = Brushes.Red;
+                }
+                else if (((DateTime)deadline - DateTime.Today).TotalDays == days)
+                {
+                    lblDaysRemaining.Foreground = Brushes.Yellow;
+                }
+                else if (((DateTime)deadline - DateTime.Today).TotalDays > days)
+                {
+                    lblDaysRemaining.Foreground = Brushes.LightGreen;
+                }
+
+            }
+            else if (deadline <= DateTime.Today)
+            {
+                lblDeadline.Content = "Release Date: " + ((DateTime)deadline).ToShortDateString();
+                lblDaysRemaining.Content = "Days Remaining: DUE,.";
+            }
+            else
+            {
+                lblDeadline.Content = "Release Date: TBD";
+                lblDaysRemaining.Content = "Days Remaining: TBD";
+            }
         }
 
         private void SetBudgetandCost()
@@ -205,7 +252,6 @@ namespace FinalProjectApp.Pages
                 var query = (from x in context.Components
                              where x.ProjectId == SysVars.CurrentProjectId && x.Selected == false
                              select x);
-
                 foreach (var comp in query)
                 {
                     Tuple<long, string, string> compListTuple = 
@@ -349,7 +395,7 @@ namespace FinalProjectApp.Pages
                 canGraph.UpdateLayout();
 
                 SaveFileDialog s = new SaveFileDialog();
-                s.FileName = "OptionsGraph";
+                s.FileName = "NewImage";
                 s.DefaultExt = ".png";
                 s.Filter = "PNG files (.png)|*.png";
 
@@ -439,7 +485,15 @@ namespace FinalProjectApp.Pages
 
         private void ProduceReport_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                buildReport.CreateReport();
+                System.Windows.MessageBox.Show("Report Creation Successful");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
         }
 
         private void ChangeGraph_Click(object sender, RoutedEventArgs e)

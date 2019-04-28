@@ -42,7 +42,7 @@ namespace FinalProjectApp.Pages
                     foreach (Option option in query)
                     {
                         double callVal = blackSchole.CalculateOption(option.ValueToSystem, option.CostToBuild, 
-                            (Convert.ToInt32(txtDurationInDays.Text)/364), 1, option.Volatility);
+                            (Convert.ToInt32(txtDurationInDays.Text)/364.0), 1, option.Volatility);
 
                         bool check = false;
                         if (cbComplete.IsChecked == true) { check = false; }

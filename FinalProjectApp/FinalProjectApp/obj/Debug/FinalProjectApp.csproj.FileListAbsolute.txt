@@ -44,3 +44,4 @@ D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.c
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.CopyComplete
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.exe
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.pdb
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.ResolveComReference.cache

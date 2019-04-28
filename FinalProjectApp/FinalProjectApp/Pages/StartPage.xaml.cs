@@ -1,6 +1,8 @@
 ﻿using FinalProjectApp.Classes;
 using FinalProjectApp.Pages;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -11,7 +13,8 @@ namespace FinalProjectApp.ProjectPages
 {
     public partial class StartPage : Page
     {
-        FinalProjectDbEntities context = new FinalProjectDbEntities(); 
+        FinalProjectDbEntities context = new FinalProjectDbEntities();
+        ProjectReport projectReport = new ProjectReport();
 
         public StartPage()
         {
@@ -33,7 +36,6 @@ namespace FinalProjectApp.ProjectPages
             projectListItems.Items.Clear();
             buildListItems.Items.Clear();
             txtDescription.Text = "";
-            txtStats.Text = "";
             lblProjectName.Content = "";
         }
 
@@ -45,6 +47,7 @@ namespace FinalProjectApp.ProjectPages
             SysVars.CurrentProjectDescription = "";
             SysVars.CurrentBuildId = 0;
             SysVars.CurrentBuildName = "";
+            SysVars.CurrentBuildDeadline = null;
             ClearData();
             Refresh();
         }
@@ -66,6 +69,7 @@ namespace FinalProjectApp.ProjectPages
                 OpenBuild.Visibility = Visibility.Hidden;
                 NewBuild.Visibility = Visibility.Hidden;
                 DeleteBuild.Visibility = Visibility.Hidden;
+                ProduceReport.Visibility = Visibility.Hidden;
             }
             else if(SysVars.CurrentProjectId > 0)
             {
@@ -82,6 +86,7 @@ namespace FinalProjectApp.ProjectPages
                 OpenBuild.Visibility = Visibility.Visible;
                 NewBuild.Visibility = Visibility.Visible;
                 DeleteBuild.Visibility = Visibility.Visible;
+                ProduceReport.Visibility = Visibility.Visible;
             }
         }
 
@@ -90,7 +95,6 @@ namespace FinalProjectApp.ProjectPages
         {
             lblProjectName.Content = SysVars.CurrentProjectName;
             txtDescription.Text = SysVars.CurrentProjectDescription;
-            txtStats.Text = "N/A";
             PopulateProjects();
             if (SysVars.CurrentProjectId > 0)
             {
@@ -129,20 +133,117 @@ namespace FinalProjectApp.ProjectPages
         //Populates the builds list with all builds connected to the selected project by id.
         public void PopulateBuildsByProjectId(int id)
         {
+            List<Build> builds = new List<Build>();
             buildListItems.Items.Clear();
             try
             {
                 var query = (from x in context.Builds
                              where x.ProjectId == id
                              select x);
-
                 foreach (var build in query)
                 {
                     Tuple<int, string> listTuple = new Tuple<int, string>(build.Id, build.Version);
                     buildListItems.Items.Add(listTuple);
+                    builds.Add(build);
                 }
             }
             catch{ }
+            PopulateStats(builds);
+        }
+
+        private void PopulateStats(List<Build> builds)
+        {
+            int totalOptions = 0, totalDevDays = 0, totalCompsAvailable = 0;
+            double totalValue = 0, totalCost = 0, totalBudget = 0, totalProfit = 0;
+            double averageValueToCost = 0, averageVolatility = 0, averageCallValue = 0;
+            int averageOptPerBuild = 0;
+
+            int optionsComplete = 0, optionsIncomplete = 0;
+            double optCompleteVal = 0, optIncompleteVal = 0, completeOptProfit = 0;
+
+            List<double> avOptPerBuildList = new List<double>();
+            List<double> avCallValList = new List<double>();
+            List<double> avVolList = new List<double>();
+            List<double> avValToCostList = new List<double>();
+
+            var compQry = (from x in context.Components
+                           where x.ProjectId == SysVars.CurrentProjectId
+                           select x);
+            foreach (var comp in compQry)
+            {
+                if (comp.Selected == false) { totalCompsAvailable++; }
+            }
+
+            foreach (var build in builds)
+            {
+                totalBudget += build.Budget;
+                int optionCount = 0;
+
+                var optionQry = (from x in context.Options
+                                 where x.BuildId == build.Id
+                                 select x);
+                foreach (var option in optionQry)
+                {
+                    totalOptions++;
+                    optionCount++;
+                    totalDevDays += option.DurationDays;
+                    totalValue += option.ValueToSystem;
+                    totalCost += option.CostToBuild;
+
+                    avValToCostList.Add(option.ValueToCostRatio);
+                    avVolList.Add(option.Volatility);
+                    avCallValList.Add(option.CallValue);
+
+                    if (option.Complete == true)
+                    {
+                        optionsComplete++;
+                        optCompleteVal += option.ValueToSystem;
+                        completeOptProfit += option.ValueToSystem - option.CostToBuild;
+                    }
+                    else if (option.Complete == false)
+                    {
+                        optionsIncomplete++;
+                        optIncompleteVal += option.ValueToSystem;
+                    }
+                }
+                avOptPerBuildList.Add(optionCount);
+            }
+            totalProfit = totalValue - totalCost;
+            averageCallValue = getAverage(avCallValList);
+            averageValueToCost = getAverage(avValToCostList);
+            averageVolatility = getAverage(avVolList);
+            averageOptPerBuild = (int)getAverage(avOptPerBuildList);
+            
+            ObservableCollection<DataObject> stats = new ObservableCollection<DataObject>();
+            stats.Add(new DataObject { A = "Total Value:", B = totalValue.ToString() });
+            stats.Add(new DataObject { A = "Total Cost:", B = totalCost.ToString() });
+            stats.Add(new DataObject { A = "Total Profit:", B = totalProfit.ToString() });
+            stats.Add(new DataObject { A = "Total Budget:", B = totalBudget.ToString() });
+            stats.Add(new DataObject { A = "Total Options:", B = totalOptions.ToString() });
+            stats.Add(new DataObject { A = "Total Dev Days:", B = totalDevDays.ToString() });
+            stats.Add(new DataObject { A = "Options Completed:", B = optionsComplete.ToString() });
+            stats.Add(new DataObject { A = "Completed Option Profit:", B = completeOptProfit.ToString() });
+            stats.Add(new DataObject { A = "Options Not Completed:", B = optionsIncomplete.ToString() });
+            stats.Add(new DataObject { A = "Total Components Available:", B = totalCompsAvailable.ToString() });
+            stats.Add(new DataObject { A = "Mean Value-to-Cost:", B = averageValueToCost.ToString() });
+            stats.Add(new DataObject { A = "Mean Volatility:", B = averageVolatility.ToString() });
+            stats.Add(new DataObject { A = "Mean Call Value:", B = averageCallValue.ToString() });
+            stats.Add(new DataObject { A = "Mean Options per Build:", B = averageOptPerBuild.ToString() });
+            txtStats.ItemsSource = stats;
+        }
+
+        public class DataObject
+        {
+            public string A { get; set; }
+            public string B { get; set; }
+        }
+
+
+        private double getAverage(List<double> avList)
+        {
+            double result = avList.Sum();
+            result = result / avList.Count();
+            return result;
         }
 
         /* Passes currently selected string in project list to the SetCurrentProjectByName method
@@ -250,7 +351,7 @@ namespace FinalProjectApp.ProjectPages
             try
             {
                 Tuple<int,string> currentBuildSelected = (Tuple<int,string>)buildListItems.SelectedItem;
-                SetCurrentBuild(currentBuildSelected.Item1, currentBuildSelected.Item2);
+                SetCurrentBuildById(currentBuildSelected.Item1);
                 BuildPage BuildPage = new BuildPage();
                 NavigationService.GetNavigationService(this).Navigate(BuildPage);
             }
@@ -261,12 +362,19 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //When a selected build is opened, this sets the appropriate system variables
-        public void SetCurrentBuild(int id, string name)
+        public void SetCurrentBuildById(int id)
         {
             try
             {
-                SysVars.CurrentBuildId = id;
-                SysVars.CurrentBuildName = name;
+                var query = (from x in context.Builds
+                             where x.Id == id
+                             select x);
+                foreach (var build in query)
+                {
+                    SysVars.CurrentBuildId = id;
+                    SysVars.CurrentBuildName = build.Version;
+                    SysVars.CurrentBuildDeadline = build.ReleaseDate;
+                }
                 SysVars.CurrentGraphType = GraphTypes.OptionsPlot;
             }
             catch (Exception e) { MessageBox.Show(e.ToString()); }
@@ -341,6 +449,28 @@ namespace FinalProjectApp.ProjectPages
         {
             CreateBuild createBuild = new CreateBuild();
             NavigationService.GetNavigationService(this).Navigate(createBuild);
+        }
+
+        //Generates and saves a project report
+        private void ProduceReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<Tuple<string, double>> stats = new List<Tuple<string, double>>();
+                foreach (var item in txtStats.Items.OfType<DataObject>())
+                {
+                    string name = item.A;
+                    double value = Convert.ToDouble(item.B);
+                    Tuple<string, double> stat = new Tuple<string, double>(name, value);
+                    stats.Add(stat);
+                }
+                projectReport.CreateReport(stats);
+                System.Windows.MessageBox.Show("Report Creation Successful");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
         }
     }
 

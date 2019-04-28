@@ -17,6 +17,7 @@ namespace FinalProjectApp
         //Build System Variables
         public static int CurrentBuildId { get; set; }
         public static string CurrentBuildName { get; set; }
+        public static Nullable<System.DateTime> CurrentBuildDeadline { get; set; }
         //Component System Variable
         public static long CurrentComponentId { get; set; }
         //Option System Variable

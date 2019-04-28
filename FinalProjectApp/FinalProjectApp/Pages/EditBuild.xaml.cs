@@ -33,9 +33,10 @@ namespace FinalProjectApp.Pages
                             build.Version = txtVersion.Text;
                             build.Budget = Convert.ToDouble(txtBudget.Text);
                             build.ReleaseDate = date;
-                            build.MaxVolatility = 0;
                         }
                         context.SaveChanges();
+                        SysVars.CurrentBuildName = txtVersion.Text;
+                        SysVars.CurrentBuildDeadline = date;
                         MessageBox.Show("Successfully modified project " + txtVersion.Text);
                     }
                     catch (Exception ex)
@@ -87,7 +88,7 @@ namespace FinalProjectApp.Pages
             {
                 txtVersion.Text = build.Version.ToString();
                 txtBudget.Text = build.Budget.ToString();
-                txtReleaseDate.Text = build.ReleaseDate.ToString();
+                txtReleaseDate.Text = ((DateTime)build.ReleaseDate).ToShortDateString();
             }
         }
 

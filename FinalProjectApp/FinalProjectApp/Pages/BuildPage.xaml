@@ -29,12 +29,24 @@
                    Fill="#2d353e"></Rectangle>
         <Rectangle x:Name="bodyColour" Grid.Row="1" Grid.RowSpan="6" 
                    Grid.ColumnSpan="5" Fill="#4E87D4"></Rectangle>
+        
         <Canvas Name="canvasBack" Background="White" Margin="0,0,0,0" Visibility="Hidden"
                 Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="3">
         </Canvas>
+        
         <Label x:Name="lblTitle" Foreground="FloralWhite" Grid.Row="0" 
-               FontSize="31" HorizontalAlignment="Center" VerticalAlignment="Center" 
-               Grid.ColumnSpan="5" >Build</Label>
+               FontSize="31" HorizontalAlignment="Left" VerticalAlignment="Center" 
+               Grid.ColumnSpan="2" Grid.Column="1" >Build</Label>
+        <Label x:Name="lblDeadline" Foreground="FloralWhite" Grid.Row="0" 
+               FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Top" 
+               Grid.Column="3" >Deadline Date: </Label>
+        <Label x:Name="lblTotalDevDays" Foreground="FloralWhite" Grid.Row="0" 
+               FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+               Grid.Column="3" >Total Dev Days: 00</Label>
+        <Label x:Name="lblDaysRemaining" Foreground="FloralWhite" Grid.Row="0" 
+               FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+               Grid.Column="3" >Days Remaining: 00</Label>
+
         <Button x:Name="BackBtn" Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Click="BackBtn_Click" FontSize="18"
                 VerticalAlignment="Center" HorizontalAlignment="Center" Width="150">Back to Projects</Button>
         <Button x:Name="EditBuild" Margin="5,5,5,5" Grid.Row="0" Grid.Column="4" Click="EditBuild_Click" FontSize="18"
