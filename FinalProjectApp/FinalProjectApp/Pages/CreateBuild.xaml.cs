@@ -78,12 +78,36 @@ namespace FinalProjectApp.Pages
             NavigationService.GetNavigationService(this).Navigate(startPage);
         }
 
-        public string Validation()
+        private string Validation()
         {
+            if (txtVersion.Text.ToCharArray().Length > 30)
+            {
+                return "Version length must be 30 characters or less.";
+            }
+            if (txtVersion.Text.ToCharArray().Length < 1)
+            {
+                return "Version field cannot be left blank.";
+            }
+            if (Double.TryParse(txtBudget.Text, out Double n) == false)
+            {
+                return "Budget field is not numeric.";
+            }
+            if (Double.TryParse(txtBudget.Text, out Double x) == true && Convert.ToDouble(txtBudget.Text) < 0)
+            {
+                return "Budget cannot be a minus value.";
+            }
+            if (txtBudget.Text.ToCharArray().Length < 1)
+            {
+                return "Budget field cannot be left blank.";
+            }
+            if (DateTime.TryParse(txtReleaseDate.Text, out DateTime y) == false)
+            {
+                return "Release Date field is not a valid date.";
+            }
             return "SUCCESS";
         }
 
-        public void ClearData()
+        private void ClearData()
         {
             txtVersion.Text = "";
             txtBudget.Text = "";

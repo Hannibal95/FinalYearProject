@@ -1,4 +1,6 @@
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\FinalProjectApp.exe.config
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\FinalProjectApp.exe.manifest
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\FinalProjectApp.application
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\FinalProjectApp.exe
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\FinalProjectApp.pdb
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\EntityFramework.dll
@@ -11,6 +13,8 @@ D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\EntityFramework.S
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\InteractiveDataDisplay.WPF.pdb
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\Microsoft.Maps.MapControl.WPF.xml
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\bin\Debug\System.Reactive.xml
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csprojAssemblyReference.cache
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.ResolveComReference.cache
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\Pages\CreateBuild.baml
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\MainWindow.g.cs
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\Pages\BuildPage.g.cs
@@ -41,7 +45,8 @@ D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.g
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.Properties.Resources.resources
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.GenerateResource.cache
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.CoreCompileInputs.cache
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.exe.manifest
+D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.application
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.CopyComplete
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.exe
 D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.pdb
-D:\VisualStudioRepos\FinalProjectApp\FinalProjectApp\obj\Debug\FinalProjectApp.csproj.ResolveComReference.cache

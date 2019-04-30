@@ -55,12 +55,72 @@ namespace FinalProjectApp.Pages
             NavigationService.GetNavigationService(this).Navigate(buildPage);
         }
 
-        public string Validation()
+        private string Validation()
         {
+            if (txtName.Text.ToCharArray().Length > 30)
+            {
+                return "Name length must be 30 characters or less.";
+            }
+            if (txtName.Text.ToCharArray().Length < 1)
+            {
+                return "Name field cannot be left blank.";
+            }
+            if (txtDescription.Text.ToCharArray().Length > 100)
+            {
+                return "Description length must be 100 characters or less.";
+            }
+            if (Double.TryParse(txtValueToSystem.Text, out Double n) == false)
+            {
+                return "Estimated value field is not numeric.";
+            }
+            if (Double.TryParse(txtValueToSystem.Text, out Double x) == true && Convert.ToDouble(txtValueToSystem.Text) < 0)
+            {
+                return "Estimated value cannot be a minus value.";
+            }
+            if (txtValueToSystem.Text.ToCharArray().Length < 1)
+            {
+                return "Estimated value field cannot be left blank.";
+            }
+            if (Double.TryParse(txtCostToBuild.Text, out Double y) == false)
+            {
+                return "Estimated cost field is not numeric.";
+            }
+            if (Double.TryParse(txtCostToBuild.Text, out Double z) == true && Convert.ToDouble(txtCostToBuild.Text) < 0)
+            {
+                return "Estimated cost cannot be a minus value.";
+            }
+            if (txtCostToBuild.Text.ToCharArray().Length < 1)
+            {
+                return "Estimated cost field cannot be left blank.";
+            }
+            if (int.TryParse(txtDurationInDays.Text, out int a) == false)
+            {
+                return "Duration field is not a valid integer.";
+            }
+            if (int.TryParse(txtDurationInDays.Text, out int b) == true && Convert.ToInt32(txtDurationInDays.Text) < 0)
+            {
+                return "Duration cannot be a minus value";
+            }
+            if (txtDurationInDays.Text.ToCharArray().Length < 1)
+            {
+                return "Duration field cannot be left blank.";
+            }
+            if (Double.TryParse(txtVolatility.Text, out Double c) == false)
+            {
+                return "Volatility field is not numeric.";
+            }
+            if (Double.TryParse(txtVolatility.Text, out Double d) == true && Convert.ToDouble(txtCostToBuild.Text) < 0)
+            {
+                return "Volatility cannot be a minus value.";
+            }
+            if (txtVolatility.Text.ToCharArray().Length < 1)
+            {
+                return "Volatility field cannot be left blank.";
+            }
             return "SUCCESS";
         }
 
-        public void ResetData()
+        private void ResetData()
         {
             var query = (from x in context.Components
                          where x.Id == SysVars.CurrentComponentId

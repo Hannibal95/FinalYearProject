@@ -73,8 +73,32 @@ namespace FinalProjectApp.Pages
             NavigationService.GetNavigationService(this).Navigate(buildPage);
         }
 
-        public string Validation()
+        private string Validation()
         {
+            if (txtName.Text.ToCharArray().Length > 30)
+            {
+                return "Name length must be 30 characters or less.";
+            }
+            if (txtName.Text.ToCharArray().Length < 1)
+            {
+                return "Name field cannot be left blank.";
+            }
+            if (txtDescription.Text.ToCharArray().Length > 100)
+            {
+                return "Description length must be 100 characters or less.";
+            }
+            if (int.TryParse(txtDurationInDays.Text, out int a) == false)
+            {
+                return "Duration field is not a valid integer.";
+            }
+            if (int.TryParse(txtDurationInDays.Text, out int b) == true && Convert.ToInt32(txtDurationInDays.Text) < 0)
+            {
+                return "Duration cannot be a minus value";
+            }
+            if (txtDurationInDays.Text.ToCharArray().Length < 1)
+            {
+                return "Duration field cannot be left blank.";
+            }
             return "SUCCESS";
         }
 

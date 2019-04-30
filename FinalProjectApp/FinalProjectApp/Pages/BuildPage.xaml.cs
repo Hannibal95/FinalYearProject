@@ -36,7 +36,7 @@ namespace FinalProjectApp.Pages
             Refresh();
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             lblTitle.Content = "Build: " + SysVars.CurrentBuildName;
             lblGraph.Content = SysVars.CurrentGraphType.ToString();
@@ -50,7 +50,11 @@ namespace FinalProjectApp.Pages
             txtMinRisk.Text = SysVars.MinRisk.ToString();
             PopulateFilterList();
             canGraph.Children.Clear();
+            GenerateGraph();
+        }
 
+        private void GenerateGraph()
+        {
             try
             {
                 graphGen.GetGraph(canGraph, SysVars.MinRisk, SysVars.MaxRisk, FilterListObjects);
@@ -244,7 +248,7 @@ namespace FinalProjectApp.Pages
             context.SaveChanges();
         }
 
-        public void PopulateComponentsByProjectId()
+        private void PopulateComponentsByProjectId()
         {
             ComponentsList.Items.Clear();
             try
@@ -262,7 +266,7 @@ namespace FinalProjectApp.Pages
             catch { }
         }
 
-        public void PopulateOptionsByBuildId()
+        private void PopulateOptionsByBuildId()
         {
             OptionsList.Items.Clear();
             try
@@ -301,7 +305,7 @@ namespace FinalProjectApp.Pages
             }
         }
 
-        public void SetCurrentComponent(long id)
+        private void SetCurrentComponent(long id)
         {
             try { SysVars.CurrentComponentId = id; }
             catch (Exception e) { System.Windows.MessageBox.Show(e.ToString()); }
@@ -363,7 +367,7 @@ namespace FinalProjectApp.Pages
             }
         }
 
-        public void SetCurrentOption(long id)
+        private void SetCurrentOption(long id)
         {
             try { SysVars.CurrentOptionId = id; }
             catch (Exception e) { System.Windows.MessageBox.Show(e.ToString()); }
@@ -512,9 +516,36 @@ namespace FinalProjectApp.Pages
 
         private void SetParams_Click(object sender, RoutedEventArgs e)
         {
-            //PUT VALIDATION IN HERE
-            SysVars.MinRisk = Convert.ToDouble(txtMinRisk.Text);
-            SysVars.MaxRisk = Convert.ToDouble(txtMaxRisk.Text);
+            string val = "SUCCESS";
+
+            try
+            {
+                if (Convert.ToDouble(txtMinRisk.Text) > Convert.ToDouble(txtMaxRisk.Text))
+                {
+                    System.Windows.MessageBox.Show("Minimum risk must be less than the maximum risk");
+                    val = "FAIL";
+                }
+                if (Convert.ToDouble(txtMinRisk.Text) < 0)
+                {
+                    System.Windows.MessageBox.Show("Minimum risk cannot be a minus value");
+                    val = "FAIL";
+                }
+                if (Convert.ToDouble(txtMaxRisk.Text) < 0)
+                {
+                    System.Windows.MessageBox.Show("Maximum risk cannot be a minus value");
+                    val = "FAIL";
+                }
+                if (val == "SUCCESS")
+                {
+                    SysVars.MinRisk = Convert.ToDouble(txtMinRisk.Text);
+                    SysVars.MaxRisk = Convert.ToDouble(txtMaxRisk.Text);
+                }
+            }
+            catch (Exception x)
+            {
+                System.Windows.MessageBox.Show(x.ToString());
+            }
+
             Refresh();
         }
 

@@ -23,7 +23,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Refreshes the page
-        public void Refresh()
+        private void Refresh()
         {
             SetVisible();
             ClearData();
@@ -31,7 +31,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Clears the GUI component data
-        public void ClearData()
+        private void ClearData()
         {
             projectListItems.Items.Clear();
             buildListItems.Items.Clear();
@@ -40,7 +40,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Resets system variables when currently selected project is deleted.
-        public void Reset()
+        private void Reset()
         {
             SysVars.CurrentProjectId = 0;
             SysVars.CurrentProjectName = "";
@@ -53,7 +53,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Set Project Screen GUI Component Visibility
-        public void SetVisible()
+        private void SetVisible()
         {
             if(SysVars.CurrentProjectId == 0)
             {
@@ -91,7 +91,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Populates the GUI component data
-        public void PopulateFields()
+        private void PopulateFields()
         {
             lblProjectName.Content = SysVars.CurrentProjectName;
             txtDescription.Text = SysVars.CurrentProjectDescription;
@@ -103,7 +103,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Populates the projects list
-        public void PopulateProjects()
+        private void PopulateProjects()
         {
             foreach (var proj in context.Projects.ToList())
             {
@@ -112,7 +112,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //When a selected project is opened, this sets the appropriate system variables
-        public void SetCurrentProjectByName(string name)
+        private void SetCurrentProjectByName(string name)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //Populates the builds list with all builds connected to the selected project by id.
-        public void PopulateBuildsByProjectId(int id)
+        private void PopulateBuildsByProjectId(int id)
         {
             List<Build> builds = new List<Build>();
             buildListItems.Items.Clear();
@@ -339,7 +339,7 @@ namespace FinalProjectApp.ProjectPages
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Project deletion failed: " + ex.ToString());
+                    MessageBox.Show("No build selected.");
                 }
             }
         }
@@ -362,7 +362,7 @@ namespace FinalProjectApp.ProjectPages
         }
 
         //When a selected build is opened, this sets the appropriate system variables
-        public void SetCurrentBuildById(int id)
+        private void SetCurrentBuildById(int id)
         {
             try
             {

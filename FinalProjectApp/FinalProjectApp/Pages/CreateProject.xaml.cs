@@ -46,11 +46,11 @@ namespace FinalProjectApp.Pages
             NavigationService.GetNavigationService(this).Navigate(startPage);
         }
 
-        public string Validation()
+        private string Validation()
         {
-            if(txtDescription.Text.ToCharArray().Length > 50)
+            if(txtDescription.Text.ToCharArray().Length > 100)
             {
-                return "Description length must be 50 characters or less.";
+                return "Description length must be 100 characters or less.";
             }
             if(txtName.Text.ToCharArray().Length > 30)
             {
@@ -63,7 +63,7 @@ namespace FinalProjectApp.Pages
             return "SUCCESS";
         }
 
-        public void ClearData()
+        private void ClearData()
         {
             txtName.Text = "";
             txtDescription.Text = "";

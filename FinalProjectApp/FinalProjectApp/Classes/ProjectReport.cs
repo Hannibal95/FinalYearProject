@@ -12,7 +12,7 @@ namespace FinalProjectApp.Classes
 {
     public class ProjectReport
     {
-        FinalProjectDbEntities context = new FinalProjectDbEntities();
+        //FinalProjectDbEntities context = new FinalProjectDbEntities();
         List<Tuple<string, double>> projectStats = new List<Tuple<string, double>>();
         public void CreateReport(List<Tuple<string, double>> data)
         {
